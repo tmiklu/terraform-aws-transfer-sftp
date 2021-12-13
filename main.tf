@@ -19,7 +19,7 @@ resource "aws_transfer_server" "default" {
   identity_provider_type = "SERVICE_MANAGED"
   protocols              = ["SFTP"]
   domain                 = var.domain
-  endpoint_type          = local.is_vpc ? "VPC_ENDPOINT" : "PUBLIC"
+  endpoint_type          = "VPC_ENDPOINT"
   force_destroy          = var.force_destroy
   security_policy_name   = var.security_policy_name
   logging_role           = join("", aws_iam_role.logging[*].arn)
@@ -32,7 +32,6 @@ resource "aws_transfer_server" "default" {
       subnet_ids             = var.subnet_ids
       vpc_endpoint_id        = "vpce-0a9ce5440cc5d7030"
       security_group_ids     = local.security_group_enabled ? module.security_group.*.id : var.vpc_security_group_ids
-      vpc_id                 = var.vpc_id
       address_allocation_ids = var.eip_enabled ? aws_eip.sftp.*.id : var.address_allocation_ids
     }
   }
