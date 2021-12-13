@@ -20,6 +20,7 @@ resource "aws_transfer_server" "default" {
   protocols              = ["SFTP"]
   domain                 = var.domain
   endpoint_type          = local.is_vpc ? "VPC_ENDPOINT" : "PUBLIC"
+  vpc_endpoint_id        = "vpce-0a9ce5440cc5d7030"
   force_destroy          = var.force_destroy
   security_policy_name   = var.security_policy_name
   logging_role           = join("", aws_iam_role.logging[*].arn)
